@@ -1,14 +1,25 @@
-#Starter Code
+# Starter Code
+# Join Discord:
+# Join Javascript or React or Python
 import random
 
 def load_word():
+    # Open - a built in function , open file and return a file object; 'r' - open for reading default
+    # Open a file
    f = open('words.txt', 'r')
+   # Test function: print("Read Line: %s" % (f))
+   #.readlines - a method, read and return the list of all logical lines remaining in the current file
    words_list = f.readlines()
+   # Close open file
    f.close()
 
    words_list = words_list[0].split(' ')
    secret_word = random.choice(words_list)
    return secret_word
+   # Testing input from words.txt
+   # return len(secret_word)
+   # secret_word = "Wisdom"
+
 
 def is_word_guessed(secret_word, letters_guessed):
     '''
@@ -17,8 +28,27 @@ def is_word_guessed(secret_word, letters_guessed):
     returns: boolean, True only if all the letters of secretWord are in lettersGuessed;
       False otherwise
     '''
+    if secret_word == "".join(letters_guessed):
+        return True
+    else:
+        return False
 
-    # FILL IN YOUR CODE HERE...
+#----Trying to understand what I am doing. --------------------------------------------------------------
+    # secret_word = random.choice(words_list) not needed, called in a function on line 15
+    # test_word = "lalala"
+    # test_secret_word = "blahblahblah"
+    # len(secret_word)
+    # Add some logic to test if the guessed word == the secret word
+    # if test_word is test_word:
+    #     return True
+    # return False
+    # return the result of that logic as either true or false
+#---------------------------------------------------------------------------------------------------------
+
+# # is_word_guessed(secret_word, letters_guess)
+# secret_word = load_word()
+# print(is_word_guessed(secret_word, letters_guessed)) # returns a boolean
+# # spaceman(load_word())
 
 def get_guessed_word(secret_word, letters_guessed):
     '''
@@ -28,9 +58,19 @@ def get_guessed_word(secret_word, letters_guessed):
     guessed correctly, the string should contain the letter at the correct position.  For letters
     in the word that the user has not yet guessed, shown an _ (underscore) instead.
     '''
-    # FILL IN YOUR CODE HERE...
-
-
+    # declare a variable with a empty string to append
+    word = ""
+    #loop through secret_word and get individual letters from otherwise
+    for letter in secret_word:
+        #if the letter from the secret_word is in letters guessed
+        if letter in letters_guessed:
+            # if true append it in the word variable
+            word += letter + ""
+        # else append the word variable with a underscores
+        else:
+            word += "_ "
+        # return the word variable
+    return word
 
 
 def get_available_letters(letters_guessed):
@@ -39,9 +79,36 @@ def get_available_letters(letters_guessed):
     returns: string, comprised of letters that represents what letters have not
       yet been guessed.
     '''
+    #create a variable with choices left which is the alphabet
+    choices = list("abcdepghijklmnopqrstuvwxyz")
+    #Create a loop
+    for letter in letters_guessed:
+        #If the letters in letter_guessed are the letters in choices you remove it
+        if letter in choices:
+            choices.remove(letter)
+    #return what is left
+    return choices
+
+#running = True
+# while running():
+#     getLetter = user_input(
+#         "Hi This is Spaceman! You have to guess a letter of a word? - What will your letter be: ")
+#     running = select(getLetter)
 
 
+# Testing code:
+# def test():
+#     user_value = input("Hi! This is Spaceman! Guess letter in the secret word.
+#     You have __ chances to guess letters in the secret word.")
+#     print(user_value)
+#
+# test()
 
+def user_input(prompt):
+        # the input function will display a message in the terminal
+        # and wait for user input.
+        user_input = input(prompt)
+        return user_input
 
 def spaceman(secret_word):
     '''
@@ -61,9 +128,42 @@ def spaceman(secret_word):
       partially guessed word so far, as well as letters that the
       user has not yet guessed.
     '''
-    # FILL IN YOUR CODE HERE...
+    secret_word_len = len(secret_word)
+    letters_guessed = []
+    # Hi This is Spaceman! You have to guess letters in the secret word.
+    # The secret word contains len(secret_word) letters.
+    # You can guess one letter per round. What will your letter be?
+    print("Hi This is Spaceman! You have to guess letters in the secret word.")
+    print("The secret word contains {} letters.".format(secret_word_len))
+    print("You can guess one letter per round.")
+    # Store value from user in letter_guessed, an empty list - no need add the letter to the letters_guessed list
+    # Check if guessed letter
+    # if len(guessed_letter) == 1:
+    #      letters_guessed.append(guessed_letter)
+    # else:
+    #     print("Please return a single letter")
+    # while the letter is not guessed right continue to play the game
+    while not is_word_guessed(secret_word, letters_guessed):
+        guessed_letter = input("What will your letter be? ")
+        # if the user's input is not in the letter's already guessed lists
+        if guessed_letter not in letters_guessed:
+            # append the new letter into the lists
+            letters_guessed.append(guessed_letter)
+            # if is_word_guessed(secret_word, letter_guessed) is not True:
+            if not is_word_guessed(secret_word, letters_guessed):
+                #display to the user the amount of letters left to guess
+                print("The letters you have not guessed are: {}".format(get_available_letters(letters_guessed)))
+                # show the word with underscores and the correctletters in order
+                print("You are still missing these letters {}".format(get_guessed_word(secret_word, letters_guessed)))
+        else:
+            # if the letter is in the letters guessed list print the following
+            print("Guess another letter that you have not chosen yet.")
+    else:
+        # once the loop returns False print the message that the user won
+        print("Good Job! You won!")
 
 
-#
-# secret_word = load_word()
-# spaceman(load_word())
+
+
+secret_word = load_word()
+spaceman(load_word())
