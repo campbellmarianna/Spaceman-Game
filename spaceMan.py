@@ -1,6 +1,3 @@
-# Starter Code
-# Join Discord:
-# Join Javascript or React or Python
 import random
 
 def load_word():
@@ -43,12 +40,12 @@ def is_word_guessed(secret_word, letters_guessed):
     #     return True
     # return False
     # return the result of that logic as either true or false
-#---------------------------------------------------------------------------------------------------------
 
 # # is_word_guessed(secret_word, letters_guess)
 # secret_word = load_word()
 # print(is_word_guessed(secret_word, letters_guessed)) # returns a boolean
 # # spaceman(load_word())
+#---------------------------------------------------------------------------------------------------------
 
 def get_guessed_word(secret_word, letters_guessed):
     '''
@@ -89,10 +86,12 @@ def get_available_letters(letters_guessed):
     #return what is left
     return choices
 
-#running = True
+# Loop template for reference
+# running = True
 # while running():
 #     getLetter = user_input(
-#         "Hi This is Spaceman! You have to guess a letter of a word? - What will your letter be: ")
+#         "Hi This is Spaceman! You have to guess a letter of a word? -
+#         What will your letter be: ")
 #     running = select(getLetter)
 
 
@@ -136,8 +135,9 @@ def spaceman(secret_word):
     print("Hi This is Spaceman! You have to guess letters in the secret word.")
     print("The secret word contains {} letters.".format(secret_word_len))
     print("You can guess one letter per round.")
-    # Store value from user in letter_guessed, an empty list - no need add the letter to the letters_guessed list
-    # Check if guessed letter
+    # Store value from user in letter_guessed, an empty list - no need add
+    #the letter to the letters_guessed list
+    # Check if guessed letter is a single characher if else statement
     # if len(guessed_letter) == 1:
     #      letters_guessed.append(guessed_letter)
     # else:
@@ -161,8 +161,6 @@ def spaceman(secret_word):
     else:
         # once the loop returns False print the message that the user won
         print("Good Job! You won!")
-
-
 
 
 secret_word = load_word()
