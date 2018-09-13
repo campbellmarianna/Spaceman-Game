@@ -15,8 +15,8 @@ def load_word():
    return secret_word
    # Testing input from words.txt
    # return len(secret_word)
-   # secret_word = "Wisdom"
 
+print("The secret word: {} WOW".format(load_word()))
 
 def is_word_guessed(secret_word, letters_guessed):
     '''
@@ -44,7 +44,6 @@ def is_word_guessed(secret_word, letters_guessed):
 # # is_word_guessed(secret_word, letters_guess)
 # secret_word = load_word()
 # print(is_word_guessed(secret_word, letters_guessed)) # returns a boolean
-# # spaceman(load_word())
 #---------------------------------------------------------------------------------------------------------
 
 def get_guessed_word(secret_word, letters_guessed):
@@ -57,7 +56,7 @@ def get_guessed_word(secret_word, letters_guessed):
     '''
     # declare a variable with a empty string to append
     word = ""
-    #loop through secret_word and get individual letters from otherwise
+    #loop through secret_word and get individual letters
     for letter in secret_word:
         #if the letter from the secret_word is in letters guessed
         if letter in letters_guessed:
@@ -108,6 +107,51 @@ def user_input(prompt):
         # and wait for user input.
         user_input = input(prompt)
         return user_input
+        
+# Not called yet
+#life = 7
+def lives():
+    if lives == 7:
+        print("  O ")
+    if lives == 6:
+        print("  O ")
+        print("  | ")
+    if lives == 5:
+        print("  O ")
+        print("  | ")
+        print(" / ")
+    if lives == 4:
+        print("  O ")
+        print("  | ")
+        print(" / \ ")
+    if lives == 3:
+        print("  O ")
+        print(" -| ")
+        print(" / \ ")
+    if lives == 2:
+        print("|   O   |")
+        print("|  -|-  |")
+        print("|  / \  |")
+    if lives == 1:
+        print("   / \      ")
+        print("  /   \     ")
+        print(" /     \    ")
+        print("|   O   |   ")
+        print("|  -|-  |   ")
+        print("|  / \  |   ")
+        print(" \_____/    ")
+    if lives == 0:
+        print("\\        //")
+        print(" BLAST OFF!!")
+        print("   / \      ")
+        print("  /   \     ")
+        print(" /     \    ")
+        print("|   O   |   ")
+        print("|  -|-  |   ")
+        print("|  / \  |   ")
+        print(" \_____/    ")
+        print("//// \\\\   ")
+        print("No more guesses! You lose.")
 
 def spaceman(secret_word):
     '''
@@ -152,9 +196,11 @@ def spaceman(secret_word):
             # if is_word_guessed(secret_word, letter_guessed) is not True:
             if not is_word_guessed(secret_word, letters_guessed):
                 #display to the user the amount of letters left to guess
-                print("The letters you have not guessed are: {}".format(get_available_letters(letters_guessed)))
-                # show the word with underscores and the correctletters in order
-                print("You are still missing these letters {}".format(get_guessed_word(secret_word, letters_guessed)))
+                print("The letters you have not yet guessed are: {}".format(get_available_letters(letters_guessed)))
+                # show the word with underscores and the correct letters in order
+                print("You are still missing these letters: {}".format(get_guessed_word(secret_word, letters_guessed)))
+            # Take away a life if guessed_letter equal length of secret words
+            #life = life - 1
         else:
             # if the letter is in the letters guessed list print the following
             print("Guess another letter that you have not chosen yet.")
