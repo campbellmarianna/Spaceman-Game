@@ -16,8 +16,6 @@ def load_word():
    # Testing input from words.txt
    # return len(secret_word)
 
-print("The secret word: {} WOW".format(load_word()))
-
 def is_word_guessed(secret_word, letters_guessed):
     '''
     secretWord: string, the random word the user is trying to guess.  This is selected on line 9.
@@ -25,11 +23,10 @@ def is_word_guessed(secret_word, letters_guessed):
     returns: boolean, True only if all the letters of secretWord are in lettersGuessed;
       False otherwise
     '''
-    if secret_word == "".join(letters_guessed):
-        return True
-    else:
-        return False
-
+    for l in secret_word:
+        if l not in letters_guessed:
+            return True
+    return False
 #----Trying to understand what I am doing. --------------------------------------------------------------
     # secret_word = random.choice(words_list) not needed, called in a function on line 15
     # test_word = "lalala"
@@ -107,32 +104,32 @@ def user_input(prompt):
         # and wait for user input.
         user_input = input(prompt)
         return user_input
-        
-# Not called yet
-#life = 7
-def lives():
-    if lives == 7:
+
+
+count = 0
+def life(count):
+    if count == 7:
         print("  O ")
-    if lives == 6:
+    if count == 6:
         print("  O ")
         print("  | ")
-    if lives == 5:
+    if count == 5:
         print("  O ")
         print("  | ")
         print(" / ")
-    if lives == 4:
+    if count == 4:
         print("  O ")
         print("  | ")
         print(" / \ ")
-    if lives == 3:
+    if count == 3:
         print("  O ")
         print(" -| ")
         print(" / \ ")
-    if lives == 2:
+    if count == 2:
         print("|   O   |")
         print("|  -|-  |")
         print("|  / \  |")
-    if lives == 1:
+    if count == 1:
         print("   / \      ")
         print("  /   \     ")
         print(" /     \    ")
@@ -140,8 +137,8 @@ def lives():
         print("|  -|-  |   ")
         print("|  / \  |   ")
         print(" \_____/    ")
-    if lives == 0:
-        print("\\        //")
+    if count == 0:
+        print("||        ||")
         print(" BLAST OFF!!")
         print("   / \      ")
         print("  /   \     ")
@@ -150,7 +147,7 @@ def lives():
         print("|  -|-  |   ")
         print("|  / \  |   ")
         print(" \_____/    ")
-        print("//// \\\\   ")
+        print(" |||||||   ")
         print("No more guesses! You lose.")
 
 def spaceman(secret_word):
@@ -178,7 +175,7 @@ def spaceman(secret_word):
     # You can guess one letter per round. What will your letter be?
     print("Hi This is Spaceman! You have to guess letters in the secret word.")
     print("The secret word contains {} letters.".format(secret_word_len))
-    print("You can guess one letter per round.")
+    print("There are only 7 rounds. You can guess one letter per round.")
     # Store value from user in letter_guessed, an empty list - no need add
     #the letter to the letters_guessed list
     # Check if guessed letter is a single characher if else statement
@@ -187,27 +184,37 @@ def spaceman(secret_word):
     # else:
     #     print("Please return a single letter")
     # while the letter is not guessed right continue to play the game
-    while not is_word_guessed(secret_word, letters_guessed):
+while count < 7:
+    while is_word_guessed(secret_word, letters_guessed):
         guessed_letter = input("What will your letter be? ")
         # if the user's input is not in the letter's already guessed lists
         if guessed_letter not in letters_guessed:
             # append the new letter into the lists
             letters_guessed.append(guessed_letter)
+            print("The letters you have not yet guessed are: {}".format(get_available_letters(letters_guessed)))
+            # show the word with underscores and the correct letters in order
+            print("You are still missing these letters: {}".format(get_guessed_word(secret_word, letters_guessed)))
             # if is_word_guessed(secret_word, letter_guessed) is not True:
             if not is_word_guessed(secret_word, letters_guessed):
-                #display to the user the amount of letters left to guess
                 print("The letters you have not yet guessed are: {}".format(get_available_letters(letters_guessed)))
                 # show the word with underscores and the correct letters in order
                 print("You are still missing these letters: {}".format(get_guessed_word(secret_word, letters_guessed)))
-            # Take away a life if guessed_letter equal length of secret words
-            #life = life - 1
+            # Take away a life if guessed_letter equal length of secret words #life = life - 1
         else:
             # if the letter is in the letters guessed list print the following
             print("Guess another letter that you have not chosen yet.")
+            print("The letters you have not yet guessed are: {}".format(get_available_letters(letters_guessed)))
+            print("You are still missing these letters: {}".format(get_guessed_word(secret_word, letters_guessed)))
     else:
         # once the loop returns False print the message that the user won
         print("Good Job! You won!")
 
+    if is_word_guessed(secret_word, letters_guessed) == True:
+        count = count + 1
+        lives(count)
+
+else:
+    print("You have no more chances to guess. You have loss the game.")
 
 secret_word = load_word()
 spaceman(load_word())
