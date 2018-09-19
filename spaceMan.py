@@ -25,8 +25,8 @@ def is_word_guessed(secret_word, letters_guessed):
     '''
     for l in secret_word:
         if l not in letters_guessed:
-            return True
-    return False
+            return False
+    return True
 #----Trying to understand what I am doing. --------------------------------------------------------------
     # secret_word = random.choice(words_list) not needed, called in a function on line 15
     # test_word = "lalala"
@@ -106,7 +106,15 @@ def user_input(prompt):
         return user_input
 
 
-count = 0
+def is_given_guess_correct(guessed_letter, secret_word):
+    print("Secret word {}".format(secret_word))
+    if guessed_letter in secret_word:
+        return True
+    else:
+        return False
+
+
+# count = 0
 def life(count):
     if count == 7:
         print("  O ")
@@ -170,6 +178,7 @@ def spaceman(secret_word):
     '''
     secret_word_len = len(secret_word)
     letters_guessed = []
+    count = 8
     # Hi This is Spaceman! You have to guess letters in the secret word.
     # The secret word contains len(secret_word) letters.
     # You can guess one letter per round. What will your letter be?
@@ -184,8 +193,8 @@ def spaceman(secret_word):
     # else:
     #     print("Please return a single letter")
     # while the letter is not guessed right continue to play the game
-while count < 7:
-    while is_word_guessed(secret_word, letters_guessed):
+#while count < 7:
+    while is_word_guessed(secret_word, letters_guessed) == False and count > 0:
         guessed_letter = input("What will your letter be? ")
         # if the user's input is not in the letter's already guessed lists
         if guessed_letter not in letters_guessed:
@@ -194,12 +203,27 @@ while count < 7:
             print("The letters you have not yet guessed are: {}".format(get_available_letters(letters_guessed)))
             # show the word with underscores and the correct letters in order
             print("You are still missing these letters: {}".format(get_guessed_word(secret_word, letters_guessed)))
+
+            #
+
             # if is_word_guessed(secret_word, letter_guessed) is not True:
-            if not is_word_guessed(secret_word, letters_guessed):
-                print("The letters you have not yet guessed are: {}".format(get_available_letters(letters_guessed)))
-                # show the word with underscores and the correct letters in order
-                print("You are still missing these letters: {}".format(get_guessed_word(secret_word, letters_guessed)))
-            # Take away a life if guessed_letter equal length of secret words #life = life - 1
+            # if is_word_guessed(secret_word, letters_guessed):
+            #     print("The letters you have not yet guessed are: {}".format(get_available_letters(letters_guessed)))
+            #     # show the word with underscores and the correct letters in order
+            #     print("You are still missing these letters: {}".format(get_guessed_word(secret_word, letters_guessed)))
+
+            if is_given_guess_correct(guessed_letter, secret_word):
+                print("CORRECT!!")
+                life(count)
+                print(count)
+            else:
+                print("NOt correct")
+
+                # Take away a life if guessed_letter equal length of secret words #life = life - 1
+                count -= 1
+                life(count)
+                print(count)
+
         else:
             # if the letter is in the letters guessed list print the following
             print("Guess another letter that you have not chosen yet.")
@@ -207,14 +231,14 @@ while count < 7:
             print("You are still missing these letters: {}".format(get_guessed_word(secret_word, letters_guessed)))
     else:
         # once the loop returns False print the message that the user won
-        print("Good Job! You won!")
+        if count == 0:
+            print("You lost. The word was {}".format(secret_word))
+        else:
+            print("Good Job! You won!")
 
-    if is_word_guessed(secret_word, letters_guessed) == True:
-        count = count + 1
-        lives(count)
 
-else:
-    print("You have no more chances to guess. You have loss the game.")
+# else:
+#     print("You have no more chances to guess. You have loss the game.")
 
-secret_word = load_word()
+
 spaceman(load_word())
